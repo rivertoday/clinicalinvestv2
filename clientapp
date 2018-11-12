@@ -1,0 +1,102 @@
+client20181024
+    Client id
+    kltPomF1a57dmdfDUWoiPoEiUiTx07PV4MbyCQGk
+
+    Client secret
+    LMM9TDsSalgs2BxMRVHtvF1nuSZPSgyianzm15TYpPkDUMQvaUFUjM43XFQzwNqVDkbG6RKuU2kncPHk6L0pd6XYxJ6xAjaT3UpVA8e0m9lXGYNcNg5Neu4nEpzrXt2o
+
+    Client type
+    confidential
+
+    Authorization Grant Type
+    password
+
+#############################################################################################################
+curl -X POST -d "grant_type=password&username=jianghe@handian.com&password=ocean777" -u"ID8t7yWbJYvemiBzlnpJNrTKJa6l3jyl7GXB6OGh:ltNfzsaayDKdk1mxF39B5qC5FpM5Eqs4NogCXcWDjTnHB3eFhV4qSSNs1wTHwukAtmHsYpVDwAKcXlBEdGJDYqttMk2JZ9q2jGYcwbpGz5ReXALByEoK3Wnpta324AVj" http://localhost:8080/o/token/
+
+# Retrieve generalinfo
+curl -H "Authorization: Bearer ojHpSxfyv3kPTjMI8LKMCTCu3GvrCW" http://localhost:8080/prj001/geninfo/
+curl -H "Authorization: Bearer ojHpSxfyv3kPTjMI8LKMCTCu3GvrCW" http://localhost:8080/prj001/geninfo/1/
+
+
+curl -X POST -d "grant_type=password&username=test01@handian.com&password=asdf1234&scope=prj001" -u"ID8t7yWbJYvemiBzlnpJNrTKJa6l3jyl7GXB6OGh:ltNfzsaayDKdk1mxF39B5qC5FpM5Eqs4NogCXcWDjTnHB3eFhV4qSSNs1wTHwukAtmHsYpVDwAKcXlBEdGJDYqttMk2JZ9q2jGYcwbpGz5ReXALByEoK3Wnpta324AVj" http://localhost:8080/o/token/
+{"access_token": "K8x1P64ZWIlmLIHnRw4bhaRhBeMTY8", "token_type": "Bearer", "expires_in": 28800, "scope": "prj001", "refresh_token": "NJzjo9Gb8potpkFCAlXv8wXRRAiK4x"}
+
+
+curl -X POST -d "grant_type=password&username=test02@handian.com&password=asdf1234&scope=prj001" -u"ID8t7yWbJYvemiBzlnpJNrTKJa6l3jyl7GXB6OGh:ltNfzsaayDKdk1mxF39B5qC5FpM5Eqs4NogCXcWDjTnHB3eFhV4qSSNs1wTHwukAtmHsYpVDwAKcXlBEdGJDYqttMk2JZ9q2jGYcwbpGz5ReXALByEoK3Wnpta324AVj" http://localhost:8080/o/token/
+{"access_token": "0CbGKryK9iGDzHs2A1fZP0nVrQBIfH", "token_type": "Bearer", "expires_in": 28800, "scope": "prj001", "refresh_token": "vg9ziiKIUQg2xPpO44rhF7qTlLzYUq"}
+
+curl -X POST -d "grant_type=password&username=test03@handian.com&password=asdf1234&scope=prj001" -u"ID8t7yWbJYvemiBzlnpJNrTKJa6l3jyl7GXB6OGh:ltNfzsaayDKdk1mxF39B5qC5FpM5Eqs4NogCXcWDjTnHB3eFhV4qSSNs1wTHwukAtmHsYpVDwAKcXlBEdGJDYqttMk2JZ9q2jGYcwbpGz5ReXALByEoK3Wnpta324AVj" http://localhost:8080/o/token/
+{"access_token": "CVN4ABABQSFa6Lf2Ul6hd1pTCa1WNQ", "token_type": "Bearer", "expires_in": 28800, "scope": "prj001", "refresh_token": "rSqQoqTFCT7IHRe1rhbH7d2iK0S2qQ"}
+
+curl -H "Authorization: Bearer CVN4ABABQSFa6Lf2Ul6hd1pTCa1WNQ" http://localhost:8080/prj001/geninfo/2/
+
+----------------------------------------------------------------------------------------------------------
+
+curl -X POST -d "grant_type=password&username=test01@handian.com&password=asdf1234&scope=users" -u"xwAzwaxAXrHglHlkSktpK5F42GumS3L1t0H8k8JU:8HdiiCm0lelBK2iEvBvP0Au77QKrP9iy0qk3GSs8kefWpKHaY9jEmsEBQGOhC3aeq4XQEOrZTIHCqSkR6WLSBfL1umPb4oHOgnwbWiIw1UQqXJVvyv0GYG8vLb3sM2dz" http://127.0.0.1:8080/o/token/
+{
+    "scope": "prj001",
+    "access_token": "2wwkp0qTinoEImwFoN4opzBA9HDkrU",
+    "refresh_token": "CDNMPSYcqlKSHz12iRgzdLefWlEzhu",
+    "expires_in": 28800,
+    "token_type": "Bearer"
+}
+{
+    "scope": "users",
+    "access_token": "S9cWKgE4XQgFtb8F6EGwMpZx1zpCEF",
+    "refresh_token": "lIJ4ADnX2vPKhyfw1nnJlRCsFRUs79",
+    "expires_in": 28800,
+    "token_type": "Bearer"
+}
+
+curl -X POST -d "grant_type=password&username=test02@handian.com&password=asdf1234&scope=prj001" -u"xwAzwaxAXrHglHlkSktpK5F42GumS3L1t0H8k8JU:8HdiiCm0lelBK2iEvBvP0Au77QKrP9iy0qk3GSs8kefWpKHaY9jEmsEBQGOhC3aeq4XQEOrZTIHCqSkR6WLSBfL1umPb4oHOgnwbWiIw1UQqXJVvyv0GYG8vLb3sM2dz" http://127.0.0.1:8080/o/token/
+{
+    "scope": "prj001",
+    "access_token": "0W3wPoAS3TqC5oSiVfyUZUa6TTy13m",
+    "refresh_token": "zHl2rvyB0FtyrySlSN0FAZBFWf4ueA",
+    "expires_in": 28800,
+    "token_type": "Bearer"
+}
+{
+    "scope": "users",
+    "access_token": "0qqR63micsQW6IAkDScLYNTB9ljHQE",
+    "refresh_token": "gyn6qcFayHoXTQgbTAiCfG5VcxuRUO",
+    "expires_in": 28800,
+    "token_type": "Bearer"
+}
+
+curl -X POST -d "grant_type=password&username=test03@handian.com&password=asdf1234&scope=prj001" -u"xwAzwaxAXrHglHlkSktpK5F42GumS3L1t0H8k8JU:8HdiiCm0lelBK2iEvBvP0Au77QKrP9iy0qk3GSs8kefWpKHaY9jEmsEBQGOhC3aeq4XQEOrZTIHCqSkR6WLSBfL1umPb4oHOgnwbWiIw1UQqXJVvyv0GYG8vLb3sM2dz" http://127.0.0.1:8080/o/token/
+{
+    "scope": "prj001",
+    "access_token": "AFqGFhgQLPAquLSkIFOMMj1lyvKrKN",
+    "refresh_token": "w4eEo1aPZUBhU2qvadlG3ak82jefra",
+    "expires_in": 28800,
+    "token_type": "Bearer"
+}
+{
+    "scope": "users",
+    "access_token": "VEu3xDfhUxtHPR0iniulcQmsck58dI",
+    "refresh_token": "qYNudd0c2HXIpHsfGzLBWdCZ69ZnR4",
+    "expires_in": 28800,
+    "token_type": "Bearer"
+}
+
+curl -X POST -d "grant_type=password&username=jianghe@handian.com&password=ocean777&scope=users" -u"xwAzwaxAXrHglHlkSktpK5F42GumS3L1t0H8k8JU:8HdiiCm0lelBK2iEvBvP0Au77QKrP9iy0qk3GSs8kefWpKHaY9jEmsEBQGOhC3aeq4XQEOrZTIHCqSkR6WLSBfL1umPb4oHOgnwbWiIw1UQqXJVvyv0GYG8vLb3sM2dz" http://127.0.0.1:8080/o/token/
+{"access_token": "5lEC3J6s9gxCMKKt1BALhQKtLVcBL1", "token_type": "Bearer", "expires_in": 28800, "scope": "users", "refresh_token": "b57Wu29aGODMyUjf9dlP6FzhrlfnGK"}
+
+curl -H "Authorization: Bearer 3sAzMmGCBIquzjl6UFrcSDkLtwzsLe" http://127.0.0.1:8080/users/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

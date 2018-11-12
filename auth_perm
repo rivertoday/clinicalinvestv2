@@ -1,0 +1,82 @@
+1）Setting部分设定token的scope，
+例如，
+OAUTH2_PROVIDER = {
+    'AUTHORIZATION_CODE_EXPIRE_SECONDS': 60 * 5,
+    'ACCESS_TOKEN_EXPIRE_SECONDS': 60 * 60 * 8,
+    # this is the list of available scopes
+    'SCOPES': {'prj001': 'prj001访问认证', 'prj002': 'prj002访问认证', 'users': 'users访问认证'}
+}
+
+2）Model部分General Info，增加 class meta设定permission，
+例如，
+class Meta:
+        verbose_name = u'一般情况'
+        ordering = ('recdate',)
+        permissions = (
+            ("prj001_operation", "prj001操作权限"),
+        )
+python manage.py migrate后，会自动在对应的数据表给model创建上面的权限
+
+这一步也可以在python manage.py shell下面人工执行：
+>>> from prj001.models import GeneralInfo
+>>> from django.contrib.auth.models import Permission
+>>> from django.contrib.contenttypes.models import ContentType
+>>> content_type = ContentType.objects.get_for_model(GeneralInfo)
+>>> permission = Permission.objects.create(codename='prj001_operation',
+...     name='prj001操作权限',
+...     content_type=content_type)
+
+效果是一样的
+
+3）View部分 permission class设定一个自定义的rest_framework的permission，
+例如：
+新创建一个permissions.py
+class CheckAddOrChangePerm(permissions.BasePermission):# for details
+    """
+    Custom permission to only allow owners of an object to edit it.
+    """
+
+    def has_object_permission(self, request, view, obj):
+        # Read permissions are allowed to any request,
+        # so we'll always allow GET, HEAD or OPTIONS requests.
+        if request.user.has_perm('prj001.operation'):
+            return obj.owner == request.user
+        else:
+            return False
+
+然后，在view中，
+class GeneralInfoDetails(generics.RetrieveAPIView):
+    permission_classes = [CheckAddOrChangePerm, TokenHasScope]
+应用上面第2步的操作权限，
+
+4）在admin后台创建不同的用户，
+用户A授予第2步创建的权限prj001_operation
+用户B也授予该权限
+用户C不授予权限
+（创建组也可以，对组授予权限prj001_operation，然后把用户A加入到该组即可，效果一样）
+
+可以在python shell里面进行验证：
+>>> from myusers.models import MyUser
+>>> myuser = MyUser.objects.get(pk=1)
+>>> myuser.get_all_permissions()
+{'prj001.prj001_operation'}
+
+再以用户A的身份创建一个GeneralInfo的实例。
+
+最后进行该实例的访问测试，
+$curl -X POST -d "grant_type=password&username=<username>&password=<password>&scope=prj001" -u"<clientid>:<clientsecret>" http://localhost:8080/o/token/
+{"refresh_token": "mBMnIErfTrgjfTeQfu5vB9fM8dI5D2", "expires_in": 28800, "access_token": "AjU2m3lRB9OLONdz3dC3ucRzntnCz1", "token_type": "Bearer", "scope": "prj001"}
+
+$curl -H "Authorization: Bearer AjU2m3lRB9OLONdz3dC3ucRzntnCz1" http://localhost:8080/prj001/geninfo/1/
+
+实现如下效果：
+首先是身份认证部分，
+必须是合法获取的access token，才能用来访问对应的接口，否则会提示身份认证失败；
+然后即使是合法获取的access token，还要看获取的token是否包含对应的scope（即第1步设定的那个prj001）；
+如果都通过，那么继续进行权限检查，
+用户A创建的该实例，因此可以正常访问，并进行修改；
+用户B虽然具备权限，但是不是实例创建者，因此没有权限访问，（可以修改成具有只读权限）；
+用户C不具备权限，因此不能访问；
+
+
+
