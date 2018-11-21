@@ -5,6 +5,11 @@ from django.db import connection
 
 # Register your models here.
 class CLinicalProjectsAdmin(admin.ModelAdmin):
+    model = ClinicalProjects
+    fieldsets = [
+        (u'用户关联', {'fields': [ 'relusers']}),
+        (u'项目说明', {'fields': ['name', 'prj_code', 'status', 'starttime', 'endtime', 'linkurl', 'description']}),
+    ]
     list_display = ('name', 'prj_code', 'status', 'starttime', 'endtime', 'linkurl')
     list_filter = ['name']
     search_fields = ['name']

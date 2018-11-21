@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from myusers.models import MyUser
 
 # Create your models here.
 class ClinicalProjects(models.Model):
@@ -17,6 +18,7 @@ class ClinicalProjects(models.Model):
     endtime = models.DateField(u'结束日期',max_length=12)
     linkurl = models.CharField(u'项目地址',max_length=50,default='#')
     description = models.TextField(u'项目介绍')
+    relusers = models.ManyToManyField(MyUser, related_name='myprojects')
 
     class Meta:
         verbose_name = u'流调项目'

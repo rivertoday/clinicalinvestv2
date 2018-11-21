@@ -9,10 +9,15 @@ class MyUserListSerializer(serializers.ModelSerializer):
         fields = ('url', 'id', 'email', 'phone')
 
 class MyUserDetailSerializer(serializers.ModelSerializer):
+    myprojects = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        view_name='cp_detail'
+    )
 
     class Meta:
         model = MyUser
-        fields = "__all__"
+        fields = ('url', 'id', 'email', 'phone', 'user_name', 'hospital', 'address', 'myprojects')
 
     def update(self, instance, validated_data):
         for attr, value in validated_data.items():
