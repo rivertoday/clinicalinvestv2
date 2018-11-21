@@ -71,7 +71,7 @@ urlpatterns = [
     path('cc/', clinicalconclusion_list, name='clinicalconclusion-list'),
     path('cc/<pk>/', clinicalconclusion_detail, name='clinicalconclusion-detail'),
     # 用户创建的病例列表
-    path('users/<pk>/', MyUserGenInfoDetail.as_view(), name='myuser-detail'),
+    path('users/<pk>/', MyUserGenInfoDetail.as_view(), name='prj001-myuser-detail'),
     # 用户上传excel文件
     path('upload/', investfileupload_list, name='investfileupload-list'),
 ]
