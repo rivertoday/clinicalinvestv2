@@ -3,6 +3,7 @@ from rest_framework import generics
 from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import filters
 from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope, TokenHasScope
 from .models import MyUser
 from .permissions import CheckOperationPerm, IsOwnerOrReadOnly
@@ -18,6 +19,8 @@ class MyUserList(generics.ListAPIView):
     required_scopes = ['users']
     queryset = MyUser.objects.all()
     serializer_class = MyUserListSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('$user_name', '$phone')
 
 class MyUserDetail(generics.RetrieveUpdateAPIView):
     """
