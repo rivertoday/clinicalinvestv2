@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
 from .models import MyUser
+from projects.models import ClinicalProjects
 
 class MyUserListSerializer(serializers.ModelSerializer):
 
@@ -8,12 +9,18 @@ class MyUserListSerializer(serializers.ModelSerializer):
         model = MyUser
         fields = ('url', 'id', 'email', 'phone')
 
+class ProjectsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ClinicalProjects
+        fields = ('name', 'status', 'linkurl', 'description')
+
 class MyUserDetailSerializer(serializers.ModelSerializer):
-    myprojects = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='cp_detail'
-    )
+    # myprojects = serializers.HyperlinkedRelatedField(
+    #     many=True,
+    #     read_only=True,
+    #     view_name='cp_detail'
+    # )
+    myprojects = ProjectsSerializer(many=True, read_only=True)
 
     class Meta:
         model = MyUser
